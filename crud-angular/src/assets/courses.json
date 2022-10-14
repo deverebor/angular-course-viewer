@@ -3,5 +3,15 @@
     "_id": "1",
     "name": "Angular",
     "category": "Frontend"
+  },
+  {
+    "_id": "3",
+    "name": "Node",
+    "category": "Backend"
+  },
+  {
+    "_id": "4",
+    "name": "MongoDB",
+    "category": "Database"
   }
 ]
