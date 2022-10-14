@@ -1,0 +1,18 @@
+.error-dialog {
+  &__title {
+    font-weight: bold;
+    color: #da1e28;
+    padding-block-end: 8px;
+    border-bottom: 1px solid gray;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &-primary-message {
+      font-size: 16px;
+    }
+  }
+}
