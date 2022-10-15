@@ -1,0 +1,16 @@
+.app {
+  &__header {
+    &-toolbar {
+      &-anchor {
+        text-decoration: none;
+        color: #fff;
+
+        :hover {
+          text-shadow: 1px 1px 1px #000;
+          scale: 1.05;
+          transition: all 0.3s ease-in-out;
+        }
+      }
+    }
+  }
+}

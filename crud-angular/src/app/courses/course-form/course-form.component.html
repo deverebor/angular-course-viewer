@@ -32,18 +32,22 @@
         <mat-label class="course-form__content-form-field-label">
           Categoria do curso
         </mat-label>
-        <input
-          matInput
-          placeholder="Digite a categoria do curso"
+        <mat-select
           formControlName="category"
           class="course-form__content-form-field-input"
-        />
+        >
+          <mat-option value="null"></mat-option>
+          <mat-option value="Frontend">Frontend</mat-option>
+          <mat-option value="Backend">Backend</mat-option>
+        </mat-select>
       </mat-form-field>
     </form>
   </mat-card-content>
 
   <mat-card-actions>
-    <button mat-raised-button color="primary">Salvar</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()">
+      Salvar
+    </button>
     <button mat-stroked-button color="warn">Cancelar</button>
   </mat-card-actions>
 </mat-card>
