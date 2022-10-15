@@ -10,7 +10,7 @@ import { delay, first } from 'rxjs';
 export class CoursesService {
   constructor(private httpClient: HttpClient) {}
 
-  private readonly API = '/assets/courses.json';
+  private readonly API = 'api/courses/';
 
   list() {
     return this.httpClient.get<ICourse[]>(this.API).pipe(first());
