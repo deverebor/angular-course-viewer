@@ -32,6 +32,7 @@
         color="warn"
         aria-label="Botão para remover um curso"
         class="course-table__actions-cell-delete-button"
+        (click)="emitGoToDeleteCourse(course)"
       >
         <mat-icon>delete</mat-icon>
       </button>
