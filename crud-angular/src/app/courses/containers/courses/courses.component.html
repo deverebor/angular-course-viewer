@@ -12,6 +12,7 @@
       *ngIf="courses$ | async as courses; else spinner"
       [courses]="courses"
       (goToAddCourse)="goToAddCourse()"
+      (goToEditCourse)="goToEditCourse($event)"
     >
     </app-course-list>
 

@@ -2,8 +2,10 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 
 import { CoursesService } from '../../services/courses.service';
+import { ICourse } from '../../model/course';
 
 @Component({
   selector: 'app-course-form',
@@ -12,6 +14,7 @@ import { CoursesService } from '../../services/courses.service';
 })
 export class CourseFormComponent implements OnInit {
   form = this.formBuilder.group({
+    _id: [''],
     name: [''],
     category: [''],
   });
@@ -20,10 +23,18 @@ export class CourseFormComponent implements OnInit {
     private _location: Location,
     private _snackBar: MatSnackBar,
     private courseService: CoursesService,
-    private formBuilder: NonNullableFormBuilder
+    private formBuilder: NonNullableFormBuilder,
+    private route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const course: ICourse = this.route.snapshot.data['course'];
+    this.form.setValue({
+      _id: course._id,
+      name: course.name,
+      category: course.category,
+    });
+  }
 
   onSubmit() {
     this.courseService.save(this.form.value).subscribe({
@@ -51,5 +62,17 @@ export class CourseFormComponent implements OnInit {
       duration: 2000,
     });
     this._location.back();
+  }
+
+  setSubtitles(): string {
+    return this.route.snapshot.url[0].path === 'new'
+      ? 'Cadastre com as informações necessárias.'
+      : 'Edite os campos com as novas informações.';
+  }
+
+  setTitles(): string {
+    return this.route.snapshot.url[0].path === 'new'
+      ? 'Cadastre um novo curso!'
+      : 'Edição do curso.';
   }
 }

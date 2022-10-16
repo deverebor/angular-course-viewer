@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ICourse } from '../model/course';
-import { delay, first } from 'rxjs';
+import { first } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +12,12 @@ export class CoursesService {
 
   private readonly API = 'api/courses/';
 
-  list() {
+  getAll() {
     return this.httpClient.get<ICourse[]>(this.API).pipe(first());
+  }
+
+  getById(id: string) {
+    return this.httpClient.get<ICourse>(`${this.API}${id}`).pipe(first());
   }
 
   save(record: Partial<ICourse>) {

@@ -9,6 +9,7 @@ import { ICourse } from '../../model/course';
 export class CourseListComponent implements OnInit {
   @Input() courses: ICourse[] = [];
   @Output() goToAddCourse = new EventEmitter<boolean>(false);
+  @Output() goToEditCourse = new EventEmitter<ICourse>(false);
   readonly displayedColumns = ['name', 'category', 'actions'];
 
   constructor() {}
@@ -17,5 +18,9 @@ export class CourseListComponent implements OnInit {
 
   emitGoToAddCourse() {
     this.goToAddCourse.emit(true);
+  }
+
+  emitGoToEditCourse(course: ICourse) {
+    this.goToEditCourse.emit(course);
   }
 }

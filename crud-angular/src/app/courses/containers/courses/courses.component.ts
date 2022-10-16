@@ -21,7 +21,7 @@ export class CoursesComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog
   ) {
-    this.courses$ = this.coursesService.list().pipe(
+    this.courses$ = this.coursesService.getAll().pipe(
       catchError((error) => {
         this.onError('Encontramos um problema ao tentar carregar os cursos.');
         return of([]);
@@ -39,5 +39,11 @@ export class CoursesComponent implements OnInit {
 
   goToAddCourse() {
     this.router.navigate(['new'], { relativeTo: this.actualRoute });
+  }
+
+  goToEditCourse(course: ICourse) {
+    this.router.navigate(['edit', course._id], {
+      relativeTo: this.actualRoute,
+    });
   }
 }
