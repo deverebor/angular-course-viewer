@@ -20,6 +20,13 @@ public class CourseController {
         return courseRepository.findAll();
     }
     
+    @GetMapping("/{id}")
+    public ResponseEntity<Course> getCourseById(@PathVariable Long id) {
+        return courseRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Course addCourse(@RequestBody Course course) {
