@@ -1,9 +1,20 @@
 <mat-card class="courses">
-  <mat-toolbar color="primary"> Cursos Disponíveis </mat-toolbar>
+  <mat-card-header class="courses__header">
+    <mat-card-title class="courses__header-title">
+      Cursos Disponíveis
+    </mat-card-title>
+    <mat-card-subtitle class="courses__header-subtitle">
+      Selecione um novo curso aqui
+    </mat-card-subtitle>
+  </mat-card-header>
 
   <div *ngIf="courses$ | async as courses; else spinner">
-    <table mat-table [dataSource]="courses" class="mat-elevation-z8">
-      <caption>
+    <table
+      mat-table
+      [dataSource]="courses"
+      class="mat-elevation-z8 courses__table"
+    >
+      <caption class="courses__table-caption">
         Lista de cursos
       </caption>
 
