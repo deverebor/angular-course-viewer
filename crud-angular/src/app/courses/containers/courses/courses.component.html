@@ -1,0 +1,24 @@
+<mat-card class="courses">
+  <mat-card-header class="courses__header">
+    <mat-card-title class="courses__header-title">
+      Cursos Disponíveis
+    </mat-card-title>
+    <mat-card-subtitle class="courses__header-subtitle">
+      Selecione um novo curso aqui
+    </mat-card-subtitle>
+  </mat-card-header>
+  <div class="mat-elevation-z2">
+    <app-course-list
+      *ngIf="courses$ | async as courses; else spinner"
+      [courses]="courses"
+      (goToAddCourse)="goToAddCourse()"
+    >
+    </app-course-list>
+
+    <ng-template #spinner>
+      <div class="courses__spinner">
+        <mat-spinner></mat-spinner>
+      </div>
+    </ng-template>
+  </div>
+</mat-card>

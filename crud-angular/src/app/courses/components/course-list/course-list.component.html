@@ -1,0 +1,67 @@
+<mat-table [dataSource]="courses" class="course-table">
+  <caption class="course-table__caption">
+    Lista de cursos
+  </caption>
+
+  <ng-container class="course-table__actions" matColumnDef="actions">
+    <mat-header-cell class="course-table__actions-header" *matHeaderCellDef>
+      <button
+        mat-mini-fab
+        color="primary"
+        aria-label="Botão para adicionar um curso"
+        (click)="emitGoToAddCourse()"
+        class="course-table__actions-header-new-course-button"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-header-cell>
+
+    <mat-cell class="course-table__actions-cell" *matCellDef="let course">
+      <button
+        mat-icon-button
+        color="primary"
+        aria-label="Botão para editar um curso"
+        class="course-table__actions-cell-edit-button"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        color="warn"
+        aria-label="Botão para remover um curso"
+        class="course-table__actions-cell-delete-button"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="name" class="course-table__course">
+    <mat-header-cell class="course-table__course-th" *matHeaderCellDef>
+      Curso
+    </mat-header-cell>
+    <mat-cell class="course-table__course-td" *matCellDef="let course">
+      {{ course.name }}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container class="course-table__category" matColumnDef="category">
+    <mat-header-cell class="course-table__category-th" *matHeaderCellDef>
+      Categoria
+    </mat-header-cell>
+    <mat-cell class="course-table__category-td" *matCellDef="let course">
+      {{ course.category }}
+      <mat-icon
+        class="course-table__category-td-icon"
+        aria-hidden="false"
+        aria-label="Categoria do curso"
+      >
+        {{ course.category | category }}
+      </mat-icon>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
