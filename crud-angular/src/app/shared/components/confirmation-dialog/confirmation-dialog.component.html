@@ -1,0 +1,33 @@
+<section class="confirmation-dialog">
+  <header class="confirmation-dialog__header">
+    <h1
+      class="confirmation-dialog__header-title"
+      mat-dialog-title
+    >
+      {{data.title}}
+    </h1>
+  </header>
+  <main class="confirmation-dialog__content" mat-dialog-content>
+    <span class="confirmation-dialog__content-message">{{ data.message }}</span>
+  </main>
+  <footer class="confirmation-dialog__footer" mat-dialog-actions>
+    <button
+      (click)="onConfirm()"
+      class="confirmation-dialog__footer__button-confirm"
+      color="primary"
+      mat-button
+      mat-flat-button
+    >
+      Sim
+    </button>
+    <button
+      (click)="onConfirm(false)"
+      class="confirmation-dialog__footer__button-cancel"
+      color="warn"
+      mat-stroked-button
+    >
+      Não
+    </button>
+  </footer>
+
+</section>

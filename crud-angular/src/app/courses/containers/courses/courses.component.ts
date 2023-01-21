@@ -1,12 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Observable, of } from 'rxjs';
-import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
+import {Component} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ActivatedRoute, Router} from '@angular/router';
+import {catchError, Observable, of} from 'rxjs';
+import {
+  ErrorDialogComponent
+} from 'src/app/shared/components/error-dialog/error-dialog.component';
 
-import { ICourse } from '../../model/course';
-import { CoursesService } from '../../services/courses.service';
+import {ICourse} from '../../model/course';
+import {CoursesService} from '../../services/courses.service';
+import {
+  ConfirmationDialogComponent
+} from "../../../shared/components/confirmation-dialog/confirmation-dialog.component";
+import {
+  IConfirmationDialog
+} from "../../../shared/components/confirmation-dialog/interfaces/confirmation-dialog";
 
 @Component({
   selector: 'app-courses',
@@ -52,18 +60,31 @@ export class CoursesComponent {
   }
 
   onDeleteCourse(course: ICourse) {
-    this.coursesService.delete(course._id).subscribe({
-      next: () => {
-        this.refresh();
-        this._snackBar.open('Curso removido com sucesso!', 'X', {
-          duration: 2000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
+    const dialogDeleteCourse: IConfirmationDialog = {
+      title: `Deseja realmente excluir o curso ${course.name}?`,
+      message: 'Esta ação não poderá ser desfeita. Deseja continuar?',
+    }
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: dialogDeleteCourse,
+    });
+
+    dialogRef.afterClosed().subscribe((dialogResult: boolean) => {
+      if (dialogResult) {
+        this.coursesService.delete(course._id).subscribe({
+          next: () => {
+            this.refresh();
+            this._snackBar.open('Curso removido com sucesso!', 'X', {
+              duration: 2000,
+              verticalPosition: 'top',
+              horizontalPosition: 'center',
+            });
+          },
+          error: () => {
+            this.onError('Encontramos um problema ao tentar excluir o curso.');
+          },
         });
-      },
-      error: () => {
-        this.onError('Encontramos um problema ao tentar excluir o curso.');
-      },
+      }
     });
   }
 }
