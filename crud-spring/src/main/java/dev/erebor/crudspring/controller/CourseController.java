@@ -39,7 +39,9 @@ public class CourseController {
                 .map(recordFound -> {
                     recordFound.setName(course.getName());
                     recordFound.setCategory(course.getCategory());
+
                     Course updated = courseRepository.save(recordFound);
+
                     return ResponseEntity.ok(courseRepository.save(recordFound));
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -50,6 +52,7 @@ public class CourseController {
         return courseRepository.findById(id)
                 .map(recordFound -> {
                     courseRepository.deleteById(id);
+                    
                     return ResponseEntity.ok().build();
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
