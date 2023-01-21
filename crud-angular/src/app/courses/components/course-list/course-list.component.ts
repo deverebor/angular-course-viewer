@@ -10,7 +10,7 @@ export class CourseListComponent implements OnInit {
   @Input() courses: ICourse[] = [];
   @Output() goToAddCourse = new EventEmitter<boolean>(false);
   @Output() goToEditCourse = new EventEmitter<ICourse>(false);
-  @Output() goToDeleteCourse = new EventEmitter<ICourse>(false);
+  @Output() deleteCourse = new EventEmitter<ICourse>(false);
   readonly displayedColumns = ['name', 'category', 'actions'];
 
   constructor() {}
@@ -26,6 +26,6 @@ export class CourseListComponent implements OnInit {
   }
 
   emitGoToDeleteCourse(course: ICourse) {
-    this.goToDeleteCourse.emit(course);
+    this.deleteCourse.emit(course);
   }
 }

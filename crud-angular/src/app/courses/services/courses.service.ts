@@ -27,10 +27,6 @@ export class CoursesService {
     return this.create(record);
   }
 
-  delete(id: string) {
-    return this.httpClient.delete(`${this.API}${id}`).pipe(first());
-  }
-
   private create(record: Partial<ICourse>) {
     return this.httpClient.post<ICourse>(this.API, record).pipe(first());
   }
@@ -39,5 +35,9 @@ export class CoursesService {
     return this.httpClient
       .put<ICourse>(`${this.API}${record._id}`, record)
       .pipe(first());
+  }
+
+  delete(id: string) {
+    return this.httpClient.delete(`${this.API}${id}`).pipe(first());
   }
 }

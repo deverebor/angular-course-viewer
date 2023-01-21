@@ -13,7 +13,7 @@ import { CoursesService } from '../../services/courses.service';
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss'],
 })
-export class CoursesComponent implements OnInit {
+export class CoursesComponent {
   courses$: Observable<ICourse[]> | null = null;
 
   constructor(
@@ -25,8 +25,6 @@ export class CoursesComponent implements OnInit {
   ) {
     this.refresh();
   }
-
-  ngOnInit(): void {}
 
   refresh() {
     this.courses$ = this.coursesService.getAll().pipe(
@@ -59,6 +57,7 @@ export class CoursesComponent implements OnInit {
         this.refresh();
         this._snackBar.open('Curso removido com sucesso!', 'X', {
           duration: 2000,
+          verticalPosition: 'top',
           horizontalPosition: 'center',
         });
       },
