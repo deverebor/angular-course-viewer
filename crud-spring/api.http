@@ -21,3 +21,26 @@ Content-Type: application/json
   "name": "Vue.js",
   "category": "Frontend"
 }
+
+###
+
+# GET all courses
+
+GET http://localhost:8080/api/courses
+Content-Type: application/json
+
+###
+
+# GET course by id
+
+GET http://localhost:8080/api/courses/2
+Content-Type: application/json
+
+###
+
+# DELETE course by id
+
+DELETE http://localhost:8080/api/courses/2
+Content-Type: application/json
+
+###
