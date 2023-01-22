@@ -20,7 +20,7 @@ public class CrudSpringApplication {
             courseRepository.deleteAll();
             Course c = new Course();
             
-            c.setName("Angular");
+            c.setName("Angular com Spring Boot");
             c.setCategory("Frontend");
             
             courseRepository.save(c);
