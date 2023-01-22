@@ -18,6 +18,10 @@
     &-form {
       &-field {
         display: block;
+
+        &:first-child {
+          margin-bottom: 8px;
+        }
       }
     }
   }

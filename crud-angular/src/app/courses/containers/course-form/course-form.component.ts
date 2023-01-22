@@ -1,11 +1,11 @@
-import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { NonNullableFormBuilder } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import {Location} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {NonNullableFormBuilder, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ActivatedRoute} from '@angular/router';
 
-import { CoursesService } from '../../services/courses.service';
-import { ICourse } from '../../model/course';
+import {CoursesService} from '../../services/courses.service';
+import {ICourse} from '../../model/course';
 
 @Component({
   selector: 'app-course-form',
@@ -13,10 +13,13 @@ import { ICourse } from '../../model/course';
   styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent implements OnInit {
+
+  private formNameMinLength = 5;
+  private formNameMaxLength = 100;
   form = this.formBuilder.group({
     _id: [''],
-    name: [''],
-    category: [''],
+    name: ['', [Validators.required, Validators.minLength(this.formNameMinLength), Validators.maxLength(this.formNameMaxLength)]],
+    category: ['', [Validators.required]],
   });
 
   constructor(
@@ -25,9 +28,10 @@ export class CourseFormComponent implements OnInit {
     private courseService: CoursesService,
     private formBuilder: NonNullableFormBuilder,
     private route: ActivatedRoute
-  ) {}
+  ) {
+  }
 
-  ngOnInit(): void {
+  ngOnInit() {
     const course: ICourse = this.route.snapshot.data['course'];
     this.form.setValue({
       _id: course._id,
@@ -51,6 +55,40 @@ export class CourseFormComponent implements OnInit {
     this._location.back();
   }
 
+  getErrorMessage(field: string) {
+    const fieldControl = this.form.get(field);
+
+    if (fieldControl?.hasError('required')) {
+      return 'Campo obrigatório.';
+    }
+
+    if (fieldControl?.hasError('minlength')) {
+      const requiredLength = fieldControl.errors ? fieldControl.errors['minlength']['requiredLength'] : this.formNameMinLength;
+
+      return `Mínimo de ${requiredLength} caracteres.`;
+    }
+
+    if (fieldControl?.hasError('maxlength')) {
+      const requiredLength = fieldControl.errors ? fieldControl.errors['maxlength']['requiredLength'] : this.formNameMaxLength;
+
+      return `Máximo de ${requiredLength} caracteres.`;
+    }
+
+    return 'Campo inválido.'
+  }
+
+  setSubtitle(): string {
+    return this.route.snapshot.url[0].path === 'new'
+      ? 'Cadastre com as informações necessárias.'
+      : 'Edite os campos com as novas informações.';
+  }
+
+  setTitle(): string {
+    return this.route.snapshot.url[0].path === 'new'
+      ? 'Cadastre um novo curso!'
+      : 'Edição do curso.';
+  }
+
   private onError() {
     this._snackBar.open('Erro ao salvar o curso.', 'Fechar', {
       duration: 2000,
@@ -62,17 +100,5 @@ export class CourseFormComponent implements OnInit {
       duration: 2000,
     });
     this._location.back();
-  }
-
-  setSubtitles(): string {
-    return this.route.snapshot.url[0].path === 'new'
-      ? 'Cadastre com as informações necessárias.'
-      : 'Edite os campos com as novas informações.';
-  }
-
-  setTitles(): string {
-    return this.route.snapshot.url[0].path === 'new'
-      ? 'Cadastre um novo curso!'
-      : 'Edição do curso.';
   }
 }

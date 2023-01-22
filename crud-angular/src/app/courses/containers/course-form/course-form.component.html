@@ -1,10 +1,10 @@
 <mat-card class="course-form">
   <mat-card-header class="course-form__header">
     <mat-card-title class="course-form__header-title">
-      {{ setTitles() }}
+      {{ setTitle() }}
     </mat-card-title>
     <mat-card-subtitle class="course-form__header-subtitle">
-      {{ setSubtitles() }}
+      {{ setSubtitle() }}
     </mat-card-subtitle>
   </mat-card-header>
 
@@ -18,11 +18,18 @@
           Nome do curso
         </mat-label>
         <input
+          #inputName
+          class="course-form__content-form-field-input"
+          formControlName="name"
           matInput
           placeholder="Digite o nome do curso"
-          formControlName="name"
-          class="course-form__content-form-field-input"
         />
+        <mat-hint align="end">{{inputName.value?.length || 0}}/100</mat-hint>
+        <mat-error
+          *ngIf="form.get('name')?.invalid"
+        >
+          {{ getErrorMessage('name') }}
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field
@@ -33,22 +40,35 @@
           Categoria do curso
         </mat-label>
         <mat-select
-          formControlName="category"
           class="course-form__content-form-field-input"
+          formControlName="category"
         >
           <mat-option value="null"></mat-option>
           <mat-option value="Frontend">Frontend</mat-option>
           <mat-option value="Backend">Backend</mat-option>
         </mat-select>
+        <mat-error
+          *ngIf="form.get('category')?.invalid"
+        >
+          {{ getErrorMessage('category') }}
+        </mat-error>
       </mat-form-field>
     </form>
   </mat-card-content>
 
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="onSubmit()">
+    <button
+      (click)="onSubmit()"
+      color="primary"
+      mat-raised-button
+    >
       Salvar
     </button>
-    <button mat-stroked-button color="warn" (click)="onCancel()">
+    <button
+      (click)="onCancel()"
+      color="warn"
+      mat-stroked-button
+    >
       Cancelar
     </button>
   </mat-card-actions>
